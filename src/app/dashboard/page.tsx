@@ -24,10 +24,8 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen">
-      <AppNav />
-
-      <main className="mx-auto max-w-2xl px-4 py-6 sm:px-6">
+    <AppNav>
+      <div className="mx-auto max-w-2xl px-4 py-6 sm:px-6">
         <h1 className="text-2xl font-bold">Your Tours</h1>
 
         <div className="mt-4 flex flex-col gap-2 sm:flex-row">
@@ -74,7 +72,7 @@ export default function Dashboard() {
             </Link>
           ))}
         </div>
-      </main>
-    </div>
+      </div>
+    </AppNav>
   );
 }
