@@ -49,3 +49,36 @@ body {
 * {
   border-color: var(--border);
 }
+
+@keyframes drift {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-980px);
+  }
+}
+
+@keyframes spin-wheel {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-drift-slow {
+  animation: drift 60s linear infinite;
+}
+
+.animate-spin-wheel {
+  animation: spin-wheel 0.6s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-drift-slow,
+  .animate-spin-wheel {
+    animation: none;
+  }
+}

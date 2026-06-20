@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "GigRoute",
+  title: "Gigroutes",
   description: "Plan your tour. Route your gigs.",
 };
 

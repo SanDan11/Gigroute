@@ -70,7 +70,7 @@ export function AppNav({ children }: { children: React.ReactNode }) {
             <IconBrand className="shrink-0 text-primary" />.
             {railExpanded && (
                 <span className="text-sm font-bold tracking-tight">
-                GigRoute
+                Gigroutes
                 </span>
             )}
             </button>
@@ -135,7 +135,7 @@ export function AppNav({ children }: { children: React.ReactNode }) {
           </button>
           <IconBrand className="shrink-0 text-primary" />
           <span className="text-base font-bold tracking-tight">
-            GigRoute
+            Gigroutes
           </span>
         </header>
 

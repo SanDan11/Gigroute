@@ -7,6 +7,7 @@ import Link from "next/link";
 import { AppNav } from "@/components/AppNav";
 import { IconArchive } from "@/components/icons";
 import type { Id } from "../../../convex/_generated/dataModel";
+import { DesertStrip } from "@/components/DesertStrip";
 
 export default function Dashboard() {
   const [tab, setTab] = useState<"active" | "archived">("active");
@@ -90,7 +91,9 @@ export default function Dashboard() {
           </div>
         )}
 
-        <div className="mt-6 flex flex-col gap-3">
+        <DesertStrip />
+
+        <div className="flex flex-col gap-3">
           {tours === undefined && (
             <p className="text-muted-foreground">Loading tours...</p>
           )}
