@@ -9,6 +9,7 @@ export default defineSchema({
     startDate: v.optional(v.string()),
     endDate: v.optional(v.string()),
     totalMiles: v.optional(v.number()),
+    archived: v.optional(v.boolean()),
   }).index("by_user", ["userId"]),
 
   stops: defineTable({
