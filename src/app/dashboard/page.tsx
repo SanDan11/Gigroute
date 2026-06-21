@@ -5,7 +5,7 @@ import { useQuery, useMutation } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import Link from "next/link";
 import { AppNav } from "@/components/AppNav";
-import { IconArchive } from "@/components/icons";
+import { IconArchive, IconTrash } from "@/components/icons";
 import type { Id } from "../../../convex/_generated/dataModel";
 import { DesertStrip } from "@/components/DesertStrip";
 
@@ -15,6 +15,7 @@ export default function Dashboard() {
   const createTour = useMutation(api.tours.create);
   const archiveTour = useMutation(api.tours.archive);
   const unarchiveTour = useMutation(api.tours.unarchive);
+  const removeTour = useMutation(api.tours.remove);
   const [newTourName, setNewTourName] = useState("");
   const [creating, setCreating] = useState(false);
 
@@ -41,6 +42,20 @@ export default function Dashboard() {
     } else {
       await archiveTour({ id });
     }
+  }
+
+  async function handleDelete(
+    e: React.MouseEvent,
+    id: Id<"tours">,
+    name: string
+  ) {
+    e.preventDefault();
+    e.stopPropagation();
+    const confirmed = window.confirm(
+      `Delete "${name}" permanently? This will also delete all of its stops. This cannot be undone.`
+    );
+    if (!confirmed) return;
+    await removeTour({ id });
   }
 
   return (
@@ -120,15 +135,26 @@ export default function Dashboard() {
                   </p>
                 )}
               </div>
-              <button
-                onClick={(e) =>
-                  handleArchiveToggle(e, tour._id, tab === "archived")
-                }
-                className="shrink-0 rounded-md p-2 text-muted-foreground hover:bg-muted hover:text-foreground"
-                aria-label={tab === "archived" ? "Unarchive tour" : "Archive tour"}
-              >
-                <IconArchive />
-              </button>
+              <div className="flex shrink-0 items-center gap-1">
+                <button
+                  onClick={(e) =>
+                    handleArchiveToggle(e, tour._id, tab === "archived")
+                  }
+                  className="rounded-md p-2 text-muted-foreground hover:bg-muted hover:text-foreground"
+                  aria-label={
+                    tab === "archived" ? "Unarchive tour" : "Archive tour"
+                  }
+                >
+                  <IconArchive />
+                </button>
+                <button
+                  onClick={(e) => handleDelete(e, tour._id, tour.name)}
+                  className="rounded-md p-2 text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
+                  aria-label="Delete tour"
+                >
+                  <IconTrash />
+                </button>
+              </div>
             </Link>
           ))}
         </div>

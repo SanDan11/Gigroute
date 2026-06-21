@@ -113,3 +113,31 @@ export const remove = mutation({
     await ctx.db.delete(args.id);
   },
 });
+
+export const getWithStops = query({
+  args: { id: v.id("tours") },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) throw new Error("Not authenticated");
+
+    const tour = await ctx.db.get(args.id);
+    if (!tour || tour.userId !== identity.subject) {
+      throw new Error("Tour not found");
+    }
+
+    const stops = await ctx.db
+      .query("stops")
+      .withIndex("by_tour", (q) => q.eq("tourId", args.id))
+      .collect();
+
+    // Auto-order by date — undated stops go last, in creation order
+    const sorted = [...stops].sort((a, b) => {
+      if (!a.date && !b.date) return 0;
+      if (!a.date) return 1;
+      if (!b.date) return -1;
+      return a.date.localeCompare(b.date);
+    });
+
+    return { tour, stops: sorted };
+  },
+});
